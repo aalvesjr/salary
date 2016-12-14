@@ -1,28 +1,35 @@
 package models
 
-func BaseIR(salario, inss float32) float32 {
-	return salario - inss
+func (s Salario) BaseIR() float32 {
+	return float32(s) - s.INSS()
 }
 
-func AliquotaEDescontoIR(baseIR float32, parcelasDescontoIR, basesAliquotaIR []float32) (aliquota, desconto float32) {
+func (s Salario) AliquotaEDescontoIR() (aliquota, desconto float32) {
+	basesAliquotaIR := []float32{1903.98, 2826.65, 3751.05, 4664.68}
+	parcelasDescontoIR := []float32{142.8, 354.8, 636.13, 869.36}
+
 	switch {
-	case baseIR <= basesAliquotaIR[0]:
+	case s.BaseIR() <= basesAliquotaIR[0]:
 		return 0, 0
-	case baseIR <= basesAliquotaIR[1]:
+	case s.BaseIR() <= basesAliquotaIR[1]:
 		return 7.5, parcelasDescontoIR[0]
-	case baseIR <= basesAliquotaIR[2]:
+	case s.BaseIR() <= basesAliquotaIR[2]:
 		return 15, parcelasDescontoIR[1]
-	case baseIR <= basesAliquotaIR[3]:
+	case s.BaseIR() <= basesAliquotaIR[3]:
 		return 22.5, parcelasDescontoIR[2]
 	default:
 		return 27.5, parcelasDescontoIR[3]
 	}
 }
 
-func IRSemParcelaDesconto(baseIR, aliquotaIR float32) float32 {
-	return baseIR * aliquotaIR / 100
+func (s Salario) IRSemParcelaDesconto() float32 {
+	aliquota, _ := s.AliquotaEDescontoIR()
+
+	return s.BaseIR() * aliquota / 100
 }
 
-func IR(IRSemParcela, descontoIR float32) float32 {
-	return IRSemParcela - descontoIR
+func (s Salario) IR() float32 {
+	_, desconto := s.AliquotaEDescontoIR()
+
+	return s.IRSemParcelaDesconto() - desconto
 }
