@@ -9,6 +9,7 @@ import (
 )
 
 func main() {
+	// Valores correntes para o ano de 2016
 	basesAliquotaINSS := []float32{1556.94, 2594.92, 5189.82}
 	basesAliquotaIR := []float32{1903.98, 2826.65, 3751.05, 4664.68}
 	parcelasDescontoIR := []float32{142.8, 354.8, 636.13, 869.36}

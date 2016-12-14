@@ -12,11 +12,11 @@ func AliquotaINSS(salario float32, basesAliquotaINSS []float32) int {
 }
 
 func INSS(salario float32, aliquota int, maximaBaseINSS float32) float32 {
-	_aliquota := float32(aliquota)
+	percentual := float32(aliquota) / 100
 
 	if salario > maximaBaseINSS {
-		return maximaBaseINSS * _aliquota / 100
+		return maximaBaseINSS * percentual
 	} else {
-		return salario * _aliquota / 100
+		return salario * percentual
 	}
 }

@@ -1,6 +1,6 @@
 package models
 
-func BaseIR(salario float32, inss float32) float32 {
+func BaseIR(salario, inss float32) float32 {
 	return salario - inss
 }
 
