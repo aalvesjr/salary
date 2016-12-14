@@ -1,4 +1,5 @@
 # Calculo do Imposto de Renda (IR)
+![alt Programa executado no terminal](https://s29.postimg.org/ljvfae15j/Captura_de_tela_de_2016_12_13_23_59_00.png)
 
 ## Setup
 
