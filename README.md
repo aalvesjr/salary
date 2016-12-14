@@ -1,5 +1,5 @@
 # Calculo do Imposto de Renda (IR)
-![alt Programa executado no terminal](https://s29.postimg.org/ljvfae15j/Captura_de_tela_de_2016_12_13_23_59_00.png)
+![alt Programa executado no terminal](https://s23.postimg.org/hu8yae1zv/Captura_de_tela_de_2016_12_14_01_15_39.png)
 
 ## Setup
 
@@ -16,11 +16,13 @@ go build
 ```
 ./calcula_ir 5168.78
 
-# => Salário => 5168.78
-# => INSS => 568.57
-# => Base IR => 4600.21
-# => Aliquota IR => 22.50
-# => IR sem desconto => 1035.05
-# => Desconto do IR => 636.13
-# => valor IR => 398.92
+#=> Salário         => R$ 5168.78
+#=> Base INSS       => R$ 5168.78
+#=> Aliquota INSS   => 11.00
+#=> INSS            => R$ 568.57
+#=> Base IR         => R$ 4600.21
+#=> Aliquota IR     => 22.50
+#=> IR sem desconto => R$ 1035.05
+#=> Desconto do IR  => R$ 636.13
+#=> valor IR        => R$ 398.92
 ```
