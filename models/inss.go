@@ -1,22 +1,22 @@
 package models
 
-func AliquotaINSS(salario float32, basesAliquotaINSS []float32) int {
+func (s Salario) AliquotaEBaseINSS() (aliquota, base float32) {
+	basesAliquotaINSS := []float32{1556.94, 2594.92, 5189.82}
+	salario := float32(s)
 	switch {
 	case salario <= basesAliquotaINSS[0]:
-		return 8
+		return 8.0, salario
 	case salario <= basesAliquotaINSS[1]:
-		return 9
+		return 9.0, salario
+	case salario <= basesAliquotaINSS[2]:
+		return 11.0, salario
 	default:
-		return 11
+		return 11.0, basesAliquotaINSS[2]
 	}
 }
 
-func INSS(salario float32, aliquota int, maximaBaseINSS float32) float32 {
-	percentual := float32(aliquota) / 100
+func (s Salario) INSS() float32 {
+	aliquota, base := s.AliquotaEBaseINSS()
 
-	if salario > maximaBaseINSS {
-		return maximaBaseINSS * percentual
-	} else {
-		return salario * percentual
-	}
+	return aliquota * base / 100
 }
