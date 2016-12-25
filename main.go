@@ -8,32 +8,42 @@ import (
 	"strconv"
 )
 
+var (
+	ajuda string = `
+	São necessários dois argumentos para executar esse script: salário e descontos
+	Para calcular o IR de um salário de 5.000,00 e com descontos de 200,00, execute:
+
+	./calcula_ir 5000.00 200.00
+`
+)
+
 func main() {
 	// Recebe o salário por argumento
 	// ./calcula_ir 6120.32
-	arg, err := strconv.ParseFloat(os.Args[1], 32)
-	if err != nil || arg < 0 {
+	if len(os.Args) < 3 {
+		log.Fatal(ajuda)
+	}
+	valor, err := strconv.ParseFloat(os.Args[1], 32)
+	descontos, err2 := strconv.ParseFloat(os.Args[2], 32)
+
+	if err != nil || valor < 0 {
 		log.Fatal("Formato de salário inválido! Tente: 12345.67")
 	}
-	salario := models.Salario(arg)
+	if err2 != nil || descontos < 0 {
+		log.Fatal("Formato de desconto inválido! Tente: 12345.67")
+	}
 
-	// Calculo do INSS
-	aliquotaInss, baseInss := salario.AliquotaEBaseINSS()
-	inss := salario.INSS()
+	salario := models.NewSalario(float32(valor), float32(descontos))
 
-	// Calculo do IR
-	baseIR := salario.BaseIR()
-	aliquotaIR, descontoIR := salario.AliquotaEDescontoIR()
-	irSemDesconto := salario.IRSemParcelaDesconto()
-	ir := salario.IR()
-
-	fmt.Printf("Salário         => R$ %.2f\n", salario)
-	fmt.Printf("Base INSS       => R$ %.2f\n", baseInss)
-	fmt.Printf("Aliquota INSS   => %.2f\n", aliquotaInss)
-	fmt.Printf("INSS            => R$ %.2f\n", inss)
-	fmt.Printf("Base IR         => R$ %.2f\n", baseIR)
-	fmt.Printf("Aliquota IR     => %.2f\n", aliquotaIR)
-	fmt.Printf("IR sem desconto => R$ %.2f\n", irSemDesconto)
-	fmt.Printf("Desconto do IR  => R$ %.2f\n", descontoIR)
-	fmt.Printf("valor IR        => R$ %.2f\n", ir)
+	fmt.Printf("Salário Bruto   => R$ %.2f\n", salario.Bruto)
+	fmt.Printf("Base INSS       => R$ %.2f\n", salario.BaseINSS)
+	fmt.Printf("Aliquota INSS   => %.2f%%\n", salario.AliquotaINSS)
+	fmt.Printf("INSS            => R$ %.2f\n", salario.INSS)
+	fmt.Printf("Base IR         => R$ %.2f\n", salario.BaseIR)
+	fmt.Printf("Aliquota IR     => %.2f%%\n", salario.AliquotaIR)
+	fmt.Printf("IR sem desconto => R$ %.2f\n", salario.IRSemDesconto)
+	fmt.Printf("Desconto do IR  => R$ %.2f\n", salario.DescontoIR)
+	fmt.Printf("Valor IR        => R$ %.2f\n", salario.IR)
+	fmt.Println("-----------------------------")
+	fmt.Printf("Salário Liquido => R$ %.2f\n", salario.Liquido)
 }
