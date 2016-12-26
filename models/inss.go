@@ -1,22 +1,22 @@
 package models
 
-func AliquotaEBaseINSS(t tributavel) (aliquota, base float32) {
+func AliquotaEBaseINSS(s float32) (aliquota, base float32) {
 	basesAliquotaINSS := []float32{1556.94, 2594.92, 5189.82}
-	salario := float32(t.Valor())
+
 	switch {
-	case salario <= basesAliquotaINSS[0]:
-		return 8.0, salario
-	case salario <= basesAliquotaINSS[1]:
-		return 9.0, salario
-	case salario <= basesAliquotaINSS[2]:
-		return 11.0, salario
+	case s <= basesAliquotaINSS[0]:
+		return 8.0, s
+	case s <= basesAliquotaINSS[1]:
+		return 9.0, s
+	case s <= basesAliquotaINSS[2]:
+		return 11.0, s
 	default:
 		return 11.0, basesAliquotaINSS[2]
 	}
 }
 
-func INSS(t tributavel) float32 {
-	aliquota, base := AliquotaEBaseINSS(t)
+func INSS(s float32) float32 {
+	aliquota, base := AliquotaEBaseINSS(s)
 
 	return aliquota * base / 100
 }

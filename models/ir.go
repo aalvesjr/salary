@@ -1,13 +1,13 @@
 package models
 
-func BaseIR(t tributavel) float32 {
-	return float32(t.Valor()) - INSS(t)
+func BaseIR(s float32) float32 {
+	return float32(s) - INSS(s)
 }
 
-func AliquotaEDescontoIR(t tributavel) (aliquota, desconto float32) {
+func AliquotaEDescontoIR(s float32) (aliquota, desconto float32) {
 	basesAliquotaIR := []float32{1903.98, 2826.65, 3751.05, 4664.68}
 	parcelasDescontoIR := []float32{142.8, 354.8, 636.13, 869.36}
-	base := BaseIR(t)
+	base := BaseIR(s)
 
 	switch {
 	case base <= basesAliquotaIR[0]:
@@ -23,14 +23,14 @@ func AliquotaEDescontoIR(t tributavel) (aliquota, desconto float32) {
 	}
 }
 
-func IRSemParcelaDesconto(t tributavel) float32 {
-	aliquota, _ := AliquotaEDescontoIR(t)
+func IRSemParcelaDesconto(s float32) float32 {
+	aliquota, _ := AliquotaEDescontoIR(s)
 
-	return BaseIR(t) * aliquota / 100
+	return BaseIR(s) * aliquota / 100
 }
 
-func IR(t tributavel) float32 {
-	_, desconto := AliquotaEDescontoIR(t)
+func IR(s float32) float32 {
+	_, desconto := AliquotaEDescontoIR(s)
 
-	return IRSemParcelaDesconto(t) - desconto
+	return IRSemParcelaDesconto(s) - desconto
 }

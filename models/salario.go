@@ -22,14 +22,14 @@ func NewSalario(valor, descontos float32) Salario {
 	salario := Salario{Bruto: valor, Descontos: descontos}
 
 	// Calculo do INSS
-	salario.AliquotaINSS, salario.BaseINSS = AliquotaEBaseINSS(salario)
-	salario.INSS = INSS(salario)
+	salario.AliquotaINSS, salario.BaseINSS = AliquotaEBaseINSS(salario.Bruto)
+	salario.INSS = INSS(salario.Bruto)
 
 	// Calculo do IR
-	salario.BaseIR = BaseIR(salario)
-	salario.AliquotaIR, salario.DescontoIR = AliquotaEDescontoIR(salario)
-	salario.IRSemDesconto = IRSemParcelaDesconto(salario)
-	salario.IR = IR(salario)
+	salario.BaseIR = BaseIR(salario.Bruto)
+	salario.AliquotaIR, salario.DescontoIR = AliquotaEDescontoIR(salario.Bruto)
+	salario.IRSemDesconto = IRSemParcelaDesconto(salario.Bruto)
+	salario.IR = IR(salario.Bruto)
 
 	salario.AplicaDescontos()
 	return salario
