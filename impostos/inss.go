@@ -1,4 +1,4 @@
-package models
+package impostos
 
 func AliquotaEBaseINSS(s float32) (aliquota, base float32) {
 	basesAliquotaINSS := []float32{1556.94, 2594.92, 5189.82}

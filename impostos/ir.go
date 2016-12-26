@@ -1,4 +1,4 @@
-package models
+package impostos
 
 func BaseIR(s float32) float32 {
 	return float32(s) - INSS(s)

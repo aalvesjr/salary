@@ -1,7 +1,7 @@
-package models
+package salario
 
 import (
-	impostos "github.com/aalvesjr/salario/impostos"
+	"github.com/aalvesjr/salario/impostos"
 )
 
 type Salario struct {
