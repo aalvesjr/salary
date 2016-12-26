@@ -18,8 +18,8 @@ var (
 )
 
 func main() {
-	// Recebe o salário por argumento
-	// ./calcula_ir 6120.32
+	// Recebe o salário e descontos por argumentos
+	// ./calcula_ir 6120.32 501.32
 	if len(os.Args) < 3 {
 		log.Fatal(ajuda)
 	}
@@ -36,9 +36,12 @@ func main() {
 	salario := models.NewSalario(float32(valor), float32(descontos))
 
 	fmt.Printf("Salário Bruto   => R$ %.2f\n", salario.Bruto)
+	fmt.Printf("Descontos       => R$ %.2f\n", salario.Descontos)
+	fmt.Println("------------INSS-------------")
 	fmt.Printf("Base INSS       => R$ %.2f\n", salario.BaseINSS)
 	fmt.Printf("Aliquota INSS   => %.2f%%\n", salario.AliquotaINSS)
-	fmt.Printf("INSS            => R$ %.2f\n", salario.INSS)
+	fmt.Printf("Valor INSS      => R$ %.2f\n", salario.INSS)
+	fmt.Println("-------------IR--------------")
 	fmt.Printf("Base IR         => R$ %.2f\n", salario.BaseIR)
 	fmt.Printf("Aliquota IR     => %.2f%%\n", salario.AliquotaIR)
 	fmt.Printf("IR sem desconto => R$ %.2f\n", salario.IRSemDesconto)
