@@ -1,52 +1,42 @@
-package main
+package models
 
-import (
-	"fmt"
-	"github.com/aalvesjr/calcula_ir/models"
-	"log"
-	"os"
-	"strconv"
-)
+import "github.com/aalvesjr/salario/models"
 
-var (
-	ajuda string = `
-	São necessários dois argumentos para executar esse script: salário e descontos
-	Para calcular o IR de um salário de 5.000,00 e com descontos de 200,00, execute:
+type Salario struct {
+	Bruto         float32
+	AliquotaINSS  float32
+	BaseINSS      float32
+	INSS          float32
+	BaseIR        float32
+	AliquotaIR    float32
+	DescontoIR    float32
+	IRSemDesconto float32
+	IR            float32
+	Liquido       float32
+	Descontos     float32
+}
 
-	./calcula_ir 5000.00 200.00
-`
-)
+func (s Salario) Valor() float32 {
+	return s.Bruto
+}
 
-func main() {
-	// Recebe o salário e descontos por argumentos
-	// ./calcula_ir 6120.32 501.32
-	if len(os.Args) < 3 {
-		log.Fatal(ajuda)
-	}
-	valor, err := strconv.ParseFloat(os.Args[1], 32)
-	descontos, err2 := strconv.ParseFloat(os.Args[2], 32)
+func NewSalario(valor, descontos float32) Salario {
+	salario := Salario{Bruto: valor, Descontos: descontos}
 
-	if err != nil || valor < 0 {
-		log.Fatal("Formato de salário inválido! Tente: 12345.67")
-	}
-	if err2 != nil || descontos < 0 {
-		log.Fatal("Formato de desconto inválido! Tente: 12345.67")
-	}
+	// Calculo do INSS
+	salario.AliquotaINSS, salario.BaseINSS = models.AliquotaEBaseINSS(salario.Bruto)
+	salario.INSS = models.INSS(salario.Bruto)
 
-	salario := models.NewSalario(float32(valor), float32(descontos))
+	// Calculo do IR
+	salario.BaseIR = models.BaseIR(salario.Bruto)
+	salario.AliquotaIR, salario.DescontoIR = models.AliquotaEDescontoIR(salario.Bruto)
+	salario.IRSemDesconto = models.IRSemParcelaDesconto(salario.Bruto)
+	salario.IR = models.IR(salario.Bruto)
 
-	fmt.Printf("Salário Bruto   => R$ %.2f\n", salario.Bruto)
-	fmt.Printf("Descontos       => R$ %.2f\n", salario.Descontos)
-	fmt.Println("------------INSS-------------")
-	fmt.Printf("Base INSS       => R$ %.2f\n", salario.BaseINSS)
-	fmt.Printf("Aliquota INSS   => %.2f%%\n", salario.AliquotaINSS)
-	fmt.Printf("Valor INSS      => R$ %.2f\n", salario.INSS)
-	fmt.Println("-------------IR--------------")
-	fmt.Printf("Base IR         => R$ %.2f\n", salario.BaseIR)
-	fmt.Printf("Aliquota IR     => %.2f%%\n", salario.AliquotaIR)
-	fmt.Printf("IR sem desconto => R$ %.2f\n", salario.IRSemDesconto)
-	fmt.Printf("Desconto do IR  => R$ %.2f\n", salario.DescontoIR)
-	fmt.Printf("Valor IR        => R$ %.2f\n", salario.IR)
-	fmt.Println("-----------------------------")
-	fmt.Printf("Salário Liquido => R$ %.2f\n", salario.Liquido)
+	salario.AplicaDescontos()
+	return salario
+}
+
+func (s *Salario) AplicaDescontos() {
+	s.Liquido = s.Bruto - (s.INSS + s.IR + s.Descontos)
 }
