@@ -18,27 +18,27 @@ type Salario struct {
 	Descontos     float32
 }
 
-func (s Salario) Valor() float32 {
-	return s.Bruto
-}
-
 func NewSalario(valor, descontos float32) Salario {
 	salario := Salario{Bruto: valor, Descontos: descontos}
 
-	// Calculo do INSS
-	salario.AliquotaINSS, salario.BaseINSS = impostos.AliquotaEBaseINSS(salario.Bruto)
-	salario.INSS = impostos.INSS(salario.Bruto)
-
-	// Calculo do IR
-	salario.BaseIR = impostos.BaseIR(salario.Bruto)
-	salario.AliquotaIR, salario.DescontoIR = impostos.AliquotaEDescontoIR(salario.Bruto)
-	salario.IRSemDesconto = impostos.IRSemParcelaDesconto(salario.Bruto)
-	salario.IR = impostos.IR(salario.Bruto)
-
-	salario.AplicaDescontos()
+	salario.calculaINSS()
+	salario.calculaIR()
+	salario.aplicaDescontos()
 	return salario
 }
 
-func (s *Salario) AplicaDescontos() {
+func (s *Salario) aplicaDescontos() {
 	s.Liquido = s.Bruto - (s.INSS + s.IR + s.Descontos)
+}
+
+func (s *Salario) calculaINSS() {
+	s.AliquotaINSS, s.BaseINSS = impostos.AliquotaEBaseINSS(s.Bruto)
+	s.INSS = impostos.INSS(s.Bruto)
+}
+
+func (s *Salario) calculaIR() {
+	s.BaseIR = impostos.BaseIR(s.Bruto)
+	s.AliquotaIR, s.DescontoIR = impostos.AliquotaEDescontoIR(s.Bruto)
+	s.IRSemDesconto = impostos.IRSemParcelaDesconto(s.Bruto)
+	s.IR = impostos.IR(s.Bruto)
 }
