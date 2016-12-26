@@ -1,6 +1,8 @@
 package models
 
-import "github.com/aalvesjr/salario/models"
+import (
+	impostos "github.com/aalvesjr/salario/impostos"
+)
 
 type Salario struct {
 	Bruto         float32
@@ -24,14 +26,14 @@ func NewSalario(valor, descontos float32) Salario {
 	salario := Salario{Bruto: valor, Descontos: descontos}
 
 	// Calculo do INSS
-	salario.AliquotaINSS, salario.BaseINSS = models.AliquotaEBaseINSS(salario.Bruto)
-	salario.INSS = models.INSS(salario.Bruto)
+	salario.AliquotaINSS, salario.BaseINSS = impostos.AliquotaEBaseINSS(salario.Bruto)
+	salario.INSS = impostos.INSS(salario.Bruto)
 
 	// Calculo do IR
-	salario.BaseIR = models.BaseIR(salario.Bruto)
-	salario.AliquotaIR, salario.DescontoIR = models.AliquotaEDescontoIR(salario.Bruto)
-	salario.IRSemDesconto = models.IRSemParcelaDesconto(salario.Bruto)
-	salario.IR = models.IR(salario.Bruto)
+	salario.BaseIR = impostos.BaseIR(salario.Bruto)
+	salario.AliquotaIR, salario.DescontoIR = impostos.AliquotaEDescontoIR(salario.Bruto)
+	salario.IRSemDesconto = impostos.IRSemParcelaDesconto(salario.Bruto)
+	salario.IR = impostos.IR(salario.Bruto)
 
 	salario.AplicaDescontos()
 	return salario
