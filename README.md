@@ -1,47 +1,45 @@
-# Salario
-[![CircleCI](https://circleci.com/gh/aalvesjr/salario.svg?style=svg)](https://circleci.com/gh/aalvesjr/salario)
+# Salary
+[![CircleCI](https://circleci.com/gh/aalvesjr/salary.svg?style=svg)](https://circleci.com/gh/aalvesjr/salary)
 
 ## Setup
 
 ```
 mkdir -p $GOPATH/src/github.com/aalvesjr
-cd $GOPATH/src/github.com/aalvesjr/salario
-git clone https://github.com/aalvesjr/salario.git
-cd salario
-go build
+cd $GOPATH/src/github.com/aalvesjr/salary
+git clone https://github.com/aalvesjr/salary.git
 ```
 
 ## Using
 
-Adicione o modelo `salario` ao projeto
+Add the model `salary` at your project
 
 
 ```
 import(
-  salario "github.com/aalvesjr/salario"
+  salary "github.com/aalvesjr/salary"
 )
 ```
 
-E a função `func NewSalario(valor, desconto float32) Salario` estára disponivel para criar uma struct `Salario`
+And the function `func NewSalary(value, discount float32) Salary` will be available to create a struct `Salary`
 
 ```
-s := salario.NewSalario(5000.00, 107.32)
+s := salary.NewSalary(5000.00, 107.32)
 ```
 
-Com isso `s` será uma struct `Salario` com os seguintes atributos
+With this `s` will be a struct `Salary` with the following attributes:
 
 ```
-type Salario struct {
-	Bruto         float32
-	AliquotaINSS  float32
-	BaseINSS      float32
-	INSS          float32
-	BaseIR        float32
-	AliquotaIR    float32
-	DescontoIR    float32
-	IRSemDesconto float32
-	IR            float32
-	Liquido       float32
-	Descontos     float32
+type Salary struct {
+	Gross             float32
+	Net               float32
+	INSSRate          float32
+	INSSBase          float32
+	INSS              float32
+	IRBase            float32
+	IRRate            float32
+	IRDiscount        float32
+	IRWithoutDiscount float32
+	IR                float32
+	Discounts         float32
 }
 ```
