@@ -1,4 +1,5 @@
 # Salario
+[![CircleCI](https://circleci.com/gh/aalvesjr/salario.svg?style=svg)](https://circleci.com/gh/aalvesjr/salario)
 
 ## Setup
 
