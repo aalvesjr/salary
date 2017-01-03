@@ -66,19 +66,19 @@ func TestNewSalary(t *testing.T) {
 		}
 
 		if actual.IR != n.vir {
-			t.Errorf("NewINSS(%v).IR: expected %v, actual %v", n.i, n.vir, actual.IR)
+			t.Errorf("NewSalary(%v).IR: expected %v, actual %v", n.i, n.vir, actual.IR)
 		}
 
 		if actual.IRWithoutDiscount != n.virs {
-			t.Errorf("NewINSS(%v).IRWithoutDiscount: expected %v, actual %v", n.i, n.virs, actual.IRWithoutDiscount)
+			t.Errorf("NewSalary(%v).IRWithoutDiscount: expected %v, actual %v", n.i, n.virs, actual.IRWithoutDiscount)
 		}
 
 		if actual.IRDiscount != n.vdir {
-			t.Errorf("NewINSS(%v).IRDiscount: expected %v, actual %v", n.i, n.vdir, actual.IRDiscount)
+			t.Errorf("NewSalary(%v).IRDiscount: expected %v, actual %v", n.i, n.vdir, actual.IRDiscount)
 		}
 
 		if actual.Net != n.l {
-			t.Errorf("NewINSS(%v).Net: expected %v, actual %v", n.i, n.l, actual.Net)
+			t.Errorf("NewSalary(%v).Net: expected %v, actual %v", n.i, n.l, actual.Net)
 		}
 	}
 }

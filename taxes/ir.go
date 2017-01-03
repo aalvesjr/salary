@@ -10,18 +10,18 @@ type IR struct {
 
 func NewIR(v float32) IR {
 	ir := IR{}
-	ir.IRBase(v, NewINSS(v))
-	ir.IRRateAndDiscount()
+	ir.base(v, NewINSS(v))
+	ir.rateAndDiscount()
 	ir.ValueWithoutDiscount = ir.Base * ir.Rate
 	ir.Value = ir.ValueWithoutDiscount - ir.Discount
 	return ir
 }
 
-func (i *IR) IRBase(v float32, inss INSS) {
+func (i *IR) base(v float32, inss INSS) {
 	i.Base = v - inss.Value
 }
 
-func (i *IR) IRRateAndDiscount() {
+func (i *IR) rateAndDiscount() {
 	IRBases := []float32{1903.98, 2826.65, 3751.05, 4664.68}
 	IRInstallmentsDiscount := []float32{142.8, 354.8, 636.13, 869.36}
 	base := i.Base
