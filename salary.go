@@ -1,7 +1,7 @@
 package salary
 
 import (
-	"github.com/aalvesjr/salario/taxes"
+	"github.com/aalvesjr/salary/taxes"
 )
 
 type Salary struct {
