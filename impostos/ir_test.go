@@ -1,14 +1,14 @@
-package impostos
+package taxes
 
 import "testing"
 
 var newIRTests = []struct {
 	i   float32 // input
-	a   float32 // aliquota expected
+	a   float32 // rate expected
 	b   float32 // base expected
-	vsd float32 // ValorSemDesconto expected
-	d   float32 // desconto expected
-	v   float32 // valor expected
+	vsd float32 // value without discount expected
+	d   float32 // discount expected
+	v   float32 // value expected
 }{
 	{0, 0, 0, 0, 0, 0},
 	{1000, 0, 920, 0, 0, 0},
@@ -22,24 +22,24 @@ func TestNewIR(t *testing.T) {
 	for _, n := range newIRTests {
 		actual := NewIR(n.i)
 
-		if actual.Aliquota != n.a {
-			t.Errorf("NewINSS(%v).Aliquota: expected %v, actual %v", n.i, n.a, actual.Aliquota)
+		if actual.Rate != n.a {
+			t.Errorf("NewIR(%v).Rate: expected %v, actual %v", n.i, n.a, actual.Rate)
 		}
 
 		if actual.Base != n.b {
-			t.Errorf("NewINSS(%v).Base: expected %v, actual %v", n.i, n.b, actual.Base)
+			t.Errorf("NewIR(%v).Base: expected %v, actual %v", n.i, n.b, actual.Base)
 		}
 
-		if actual.ValorSemDesconto != n.vsd {
-			t.Errorf("NewINSS(%v).ValorSemDesconto: expected %v, actual %v", n.i, n.vsd, actual.ValorSemDesconto)
+		if actual.ValueWithoutDiscount != n.vsd {
+			t.Errorf("NewIR(%v).ValueWithoutDiscount: expected %v, actual %v", n.i, n.vsd, actual.ValueWithoutDiscount)
 		}
 
-		if actual.Desconto != n.d {
-			t.Errorf("NewINSS(%v).Desconto: expected %v, actual %v", n.i, n.d, actual.Desconto)
+		if actual.Discount != n.d {
+			t.Errorf("NewIR(%v).Discount: expected %v, actual %v", n.i, n.d, actual.Discount)
 		}
 
-		if actual.Valor != n.v {
-			t.Errorf("NewINSS(%v).Valor: expected %v, actual %v", n.i, n.v, actual.Valor)
+		if actual.Value != n.v {
+			t.Errorf("NewIR(%v).Value: expected %v, actual %v", n.i, n.v, actual.Value)
 		}
 	}
 }
