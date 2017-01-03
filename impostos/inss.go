@@ -1,22 +1,30 @@
 package impostos
 
-func AliquotaEBaseINSS(s float32) (aliquota, base float32) {
-	basesAliquotaINSS := []float32{1556.94, 2594.92, 5189.82}
-
-	switch {
-	case s <= basesAliquotaINSS[0]:
-		return 8.0, s
-	case s <= basesAliquotaINSS[1]:
-		return 9.0, s
-	case s <= basesAliquotaINSS[2]:
-		return 11.0, s
-	default:
-		return 11.0, basesAliquotaINSS[2]
-	}
+type INSS struct {
+	Aliquota float32
+	Base     float32
+	Valor    float32
 }
 
-func INSS(s float32) float32 {
-	aliquota, base := AliquotaEBaseINSS(s)
+func NewINSS(v float32) INSS {
+	inss := INSS{Base: v}
+	inss.aliquotaEBaseINSS()
+	inss.Valor = inss.Base * inss.Aliquota
+	return inss
+}
 
-	return aliquota * base / 100
+func (i *INSS) aliquotaEBaseINSS() {
+	basesAliquotaINSS := []float32{1556.94, 2594.92, 5189.82}
+	b := i.Base
+
+	switch {
+	case b <= basesAliquotaINSS[0]:
+		i.Aliquota = 0.08
+	case b <= basesAliquotaINSS[1]:
+		i.Aliquota = 0.09
+	case b <= basesAliquotaINSS[2]:
+		i.Aliquota = 0.11
+	default:
+		i.Aliquota, i.Base = 0.11, basesAliquotaINSS[2]
+	}
 }
