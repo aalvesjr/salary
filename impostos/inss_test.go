@@ -1,12 +1,12 @@
-package impostos
+package taxes
 
 import "testing"
 
 var newINSSTests = []struct {
 	i float32 // input
-	a float32 // aliquota expected
+	a float32 // rate expected
 	b float32 // base expected
-	v float32 // valor expected
+	v float32 // value expected
 }{
 	{0, 0.08, 0, 0},
 	{1000, 0.08, 1000, 80},
@@ -19,16 +19,16 @@ func TestNewINSS(t *testing.T) {
 	for _, n := range newINSSTests {
 		actual := NewINSS(n.i)
 
-		if actual.Aliquota != n.a {
-			t.Errorf("NewINSS(%v).Aliquota: expected %v, actual %v", n.i, n.a, actual.Aliquota)
+		if actual.Rate != n.a {
+			t.Errorf("NewINSS(%v).Rate: expected %v, actual %v", n.i, n.a, actual.Rate)
 		}
 
 		if actual.Base != n.b {
 			t.Errorf("NewINSS(%v).Base: expected %v, actual %v", n.i, n.b, actual.Base)
 		}
 
-		if actual.Valor != n.v {
-			t.Errorf("NewINSS(%v).Valor: expected %v, actual %v", n.i, n.v, actual.Valor)
+		if actual.Value != n.v {
+			t.Errorf("NewINSS(%v).Value: expected %v, actual %v", n.i, n.v, actual.Value)
 		}
 	}
 }
