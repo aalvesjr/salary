@@ -1,7 +1,7 @@
 package salary
 
 import (
-	"github.com/aalvesjr/salario/impostos"
+	"github.com/aalvesjr/salario/taxes"
 )
 
 type Salary struct {
@@ -20,11 +20,11 @@ type Salary struct {
 
 func NewSalary(value, discounts float32) Salary {
 	s := Salary{Gross: value, Discounts: discounts}
-	inss := impostos.NewINSS(value)
-	ir := impostos.NewIR(value)
+	inss := taxes.NewINSS(value)
+	ir := taxes.NewIR(value)
 
-	s.INSSRate, s.INSSBase, s.INSS = inss.Aliquota, inss.Base, inss.Valor
-	s.IRRate, s.IRBase, s.IRWithoutDiscount, s.IRDiscount, s.IR = ir.Aliquota, ir.Base, ir.ValorSemDesconto, ir.Desconto, ir.Valor
+	s.INSSRate, s.INSSBase, s.INSS = inss.Rate, inss.Base, inss.Value
+	s.IRRate, s.IRBase, s.IRWithoutDiscount, s.IRDiscount, s.IR = ir.Rate, ir.Base, ir.ValueWithoutDiscount, ir.Discount, ir.Value
 
 	s.Net = s.Gross - (s.INSS + s.IR + s.Discounts)
 	return s
