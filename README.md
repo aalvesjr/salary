@@ -20,7 +20,7 @@ import(
 )
 ```
 
-And the function `func NewSalario(value, discount float32) Salary` will be available to create a struct `Salary`
+And the function `func NewSalary(value, discount float32) Salary` will be available to create a struct `Salary`
 
 ```
 s := salary.NewSalary(5000.00, 107.32)
