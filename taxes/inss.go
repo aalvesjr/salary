@@ -14,7 +14,7 @@ func NewINSS(v float32) INSS {
 }
 
 func (i *INSS) baseAndRate() {
-	INSSRates := []float32{1556.94, 2594.92, 5189.82}
+	INSSRates := []float32{1659.38, 2765.66, 5531.31}
 	b := i.Base
 
 	switch {
